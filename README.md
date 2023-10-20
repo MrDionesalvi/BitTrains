@@ -1,16 +1,21 @@
-# moj_lpp
 
-A new Flutter project.
+# My Bus
 
-## Getting Started
+A simple Android application for checking LPP (Ljubljanski potniški promet) bus arrivals. It was made with Flutter.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Two custom bus stop arrival pages,
+- Bus stop arivals page
+- Dark mode
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+
+
+
+|First custom page|Second custom page|Arrivals |More arrivals |Settings |
+|-|-|-|-|-|
+|<img src="https://github.com/Anzlc/readme-media/blob/main/MyBus/tohome.png?raw=true" alt="Arrivals" width=200/>|<img src="https://github.com/Anzlc/readme-media/blob/main/MyBus/toschool.png?raw=true" alt="Arrivals" width=200/>|<img src="https://github.com/Anzlc/readme-media/blob/main/MyBus/arrivals.png?raw=true" alt="Arrivals" width=200/>|<img src="https://github.com/Anzlc/readme-media/blob/main/MyBus/morearrivals.png?raw=true" alt="Arrivals" width=200/>|<img src="https://github.com/Anzlc/readme-media/blob/main/MyBus/settings.png?raw=true" alt="Arrivals" width=200/>|
+
