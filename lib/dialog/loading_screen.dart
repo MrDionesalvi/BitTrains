@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:moj_lpp/dialog/loading_screen_controller.dart';
+import 'package:BitTrans/dialog/loading_screen_controller.dart';
 
 class LoadingScreen {
   LoadingScreen._shareInstance();

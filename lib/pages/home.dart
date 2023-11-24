@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:moj_lpp/dialog/loading_screen.dart';
+import 'package:BitTrans/dialog/loading_screen.dart';
 import "package:flutter/services.dart";
 
-import 'package:moj_lpp/fetch_bus.dart';
-import 'package:moj_lpp/pages/settings.dart';
-import 'package:moj_lpp/prefrences.dart';
-import 'package:moj_lpp/stops.dart';
+import 'package:BitTrans/fetch_bus.dart';
+import 'package:BitTrans/pages/settings.dart';
+import 'package:BitTrans/prefrences.dart';
+import 'package:BitTrans/stops.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
         label_school = BusStopUserPrefrences.get_custom_label_school();
 
         if (selected_route == 2) {
-          type = "Select stop";
+          type = "Seleziona la fermata";
         } else {
           type = selected_route == 0 ? "Direzione $label_school" : "Direzione $label_home";
         }
@@ -159,6 +159,7 @@ class _HomeState extends State<Home> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.settings),
+              color: Colors.white,
               onPressed: () async {
                 settings_opened = true;
                 await Navigator.push(context,
@@ -246,7 +247,7 @@ class _HomeState extends State<Home> {
                     time,
                     style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 100,
+                        fontSize: 55,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(

@@ -1,6 +1,6 @@
 {
-    "name": "moj_lpp",
-    "short_name": "moj_lpp",
+    "name": "BitTrans",
+    "short_name": "BitTrans",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

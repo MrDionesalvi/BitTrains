@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:moj_lpp/pages/home.dart';
-import 'package:moj_lpp/prefrences.dart';
+import 'package:BitTrans/pages/home.dart';
+import 'package:BitTrans/prefrences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
