@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
   String time = "";
   String minutes = "";
   String stop_name = "";
+  String stop_value = "";
   String type = "";
   String line_preference = "18";
   bool show_all_buses = false;
@@ -87,6 +88,7 @@ class _HomeState extends State<Home> {
           minutes = busData["minutes"].toString();
           time = busData["time"].toString();
           stop_name = stops[selected_route].name;
+          stop_value = stops[selected_route].value;
 
           label_home = BusStopUserPrefrences.get_custom_label_home();
           label_school = BusStopUserPrefrences.get_custom_label_school();
@@ -204,8 +206,8 @@ class _HomeState extends State<Home> {
                 backgroundColor: Colors.blueGrey.shade800),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.bus_alert),
-                label: "Arrivals",
-                tooltip: "Arrivals",
+                label: "Arriva alle ore",
+                tooltip: "Arriva alle ore",
                 backgroundColor: Colors.blueGrey.shade800),
           ],
         ),
@@ -217,7 +219,7 @@ class _HomeState extends State<Home> {
                 if (!show_all_buses) ...[
                   const Padding(padding: EdgeInsets.all(42)),
                   Text(
-                    "Fermata: " +stop_name + " - Linea: " + line_name,
+                    "Fermata: $stop_name ($stop_value) - Linea: $line_name",
                     style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   /*Padding(
@@ -384,13 +386,13 @@ class _HomeState extends State<Home> {
                                                 fontWeight: FontWeight.w900),
                                           ),
                                         ),
-                                        Padding(padding: EdgeInsets.all(10)),
-                                        Text("Arrivals: ",
+                                        Padding(padding: EdgeInsets.all(20)),
+                                        Text("Arriva alle: ",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold)),
-                                        Padding(padding: EdgeInsets.all(10)),
+                                        Padding(padding: EdgeInsets.all(5)),
                                         Expanded(
                                           child: ListView.builder(
                                               itemCount: arrivals[index]
@@ -413,10 +415,9 @@ class _HomeState extends State<Home> {
                                                                     .bold),
                                                       ),
                                                       Text(
-                                                          "(Arriving in ${arrivals[index].arrivals[i].minutes.toString()} minutes)",
+                                                          "(Arriva in ${arrivals[index].arrivals[i].minutes.toString()} minuti) ${arrivals[index].realTime == "true" ? "In tempo reale ✔" : "Programmato ❌"}",
                                                           style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
+                                                              color:arrivals[index].realTime == "true" ? Colors.green : Colors.yellow,
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -451,7 +452,7 @@ class _HomeState extends State<Home> {
                                   arrivals[index].line,
                                   overflow: TextOverflow.fade,
                                 ),
-                                textColor: Colors.white,
+                                textColor: arrivals[index].realTime == "true" ? Colors.green : Colors.yellow,
                                 trailing: Text(arrivals[index].gen_time()),
                               ),
                             );

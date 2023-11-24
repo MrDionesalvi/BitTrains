@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:js_interop';
+import 'package:intl/intl.dart';
 
 import 'package:http/http.dart';
 
@@ -31,7 +31,8 @@ Future<Map<String, dynamic>> get_bus(String url, String line) async {
           String realtime = "🟡";
           if (item['realtime'].toString() == "true") {
             realtime = "🟢";
-          }          resultList = {
+          }
+          resultList = {
             'line_name': item['line'],
             'time': item['hour'],
             'minutes': "In arrivo ${item['hour']}",
@@ -78,10 +79,12 @@ class Arrivals {
   List<BusArrival> arrivals = List.empty(growable: true);
   String line = "";
   String lineId = "";
+  var realTime = "";
 
-  Arrivals(String _line, String _lineId) {
+  Arrivals(String _line, String _lineId, var _realTime) {
     line = _line;
     lineId = _lineId;
+    realTime = _realTime;
   }
 
   void add_arrival(BusArrival _arrival) {
@@ -124,19 +127,30 @@ Future<List<Arrivals>> get_arrivals(String url) async {
       final jsonData = json.decode(response.body);
 
       // Create a result list to store the filtered data.
+      DateTime currDt = DateTime.now();
+      DateTime hours = DateTime(1970,01,01, currDt.hour, currDt.minute, currDt.second);
 
       if (jsonData[0] == null) {
         return arrivals_list;
       }
-
+      print("Ehi, sono nella fermata {$url}");
+      //print(jsonData);
       for (var item in jsonData) {
-        Arrivals arrival = Arrivals("", "");
-        for (var subItem in item) {
-          arrival.line = subItem["name"].toString();
-          arrival.lineId = subItem["key"].toString();
-          arrival.add_arrival(BusArrival(
-              subItem["minutes"].toString(), subItem["time"].toString()));
+        Arrivals arrival = Arrivals("", "", "false");
+        DateTime timeBus = DateFormat("hh:mm:ss").parse(item['hour']);
+        var minutesR = timeBus.difference(hours).inMinutes;
+        if (minutesR < 0){
+          continue;
         }
+        
+        arrival.line = "Linea: " + item["line"].toString();
+        arrival.lineId = item["line"].toString();
+        if (item["realtime"] == "true") {
+          arrival.realTime = "true";
+        } else {
+          arrival.realTime = "false";
+        }
+        arrival.add_arrival(BusArrival(minutesR.toString(), item["hour"].toString()));
 
         if (arrival.line != "") {
           arrivals_list.add(arrival);
@@ -144,7 +158,8 @@ Future<List<Arrivals>> get_arrivals(String url) async {
       }
     }
     return arrivals_list;
-  } catch (_) {
+  } catch (e) {
+    print(e);
     return arrivals_list;
   }
 }
