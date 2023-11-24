@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:js_interop';
 
 import 'package:http/http.dart';
 
@@ -22,24 +23,21 @@ Future<Map<String, dynamic>> get_bus(String url, String line) async {
           'key': " ",
         };
       }
-      int least_minutes = 999999;
+      print("Cerco la linea {$line} nella fermata {$url}");
       for (var item in jsonData) {
-        for (var subItem in item) {
-          print("Key: " + subItem['key'].toString());
-          if (line == subItem['key'].toString()) {
-            print("Minutes: " + subItem["minutes"].toString());
-            if (subItem["minutes"] < least_minutes) {
-              least_minutes = subItem["minutes"];
-              resultList = {
-                'line_name': subItem['name'],
-                'time': subItem['time'],
-                'minutes': "Arriving in ${subItem['minutes']} minutes",
-                'line': subItem['key'],
-              };
-              continue;
-            }
-            continue;
-          }
+        //print(item['line']); 
+        if (line == item['line'].toString()) {
+          //print("Minutes: " + item["hour"].toString());
+          String realtime = "🟡";
+          if (item['realtime'].toString() == "true") {
+            realtime = "🟢";
+          }          resultList = {
+            'line_name': item['line'],
+            'time': item['hour'],
+            'minutes': "In arrivo ${item['hour']}",
+            'line': realtime
+          };
+          break;
         }
       }
       if (resultList != null) {

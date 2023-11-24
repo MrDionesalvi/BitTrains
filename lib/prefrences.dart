@@ -6,7 +6,7 @@ class BusStopUserPrefrences {
   static SharedPreferences? preferences;
 
   static Future<void> init() async {
-    print("Hello!");
+    print("--- Init prefrences ---");
     preferences = await SharedPreferences.getInstance();
   }
 
@@ -51,7 +51,7 @@ class BusStopUserPrefrences {
       return (preferences?.getString("line")).toString();
     } else {
       print("Is null");
-      return "18";
+      return "9";
     }
   }
 
@@ -70,7 +70,7 @@ class BusStopUserPrefrences {
       return (preferences?.getString("school_label")).toString();
     } else {
       print("Is null");
-      return "school";
+      return "Università";
     }
   }
 
@@ -80,7 +80,7 @@ class BusStopUserPrefrences {
       return (preferences?.getString("home_label")).toString();
     } else {
       print("Is null");
-      return "home";
+      return "Casa";
     }
   }
 }

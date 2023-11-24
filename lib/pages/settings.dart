@@ -14,7 +14,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   Stop home = Stops.all_stops.first;
   Stop school = Stops.all_stops.last;
-  String line = "18";
+  String line = "9";
   final TextEditingController homeController = TextEditingController();
   final TextEditingController schoolController = TextEditingController();
 
@@ -29,7 +29,7 @@ class _SettingPageState extends State<SettingPage> {
 
     setState(() {
       school = BusStopUserPrefrences.get_school();
-      print("Schhol: ${school.value}");
+      print("Scuola: ${school.value}");
       home = BusStopUserPrefrences.get_home();
       line = BusStopUserPrefrences.get_line();
 
@@ -56,7 +56,7 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             children: <Widget>[
               Text(
-                "To ${BusStopUserPrefrences.get_custom_label_school()}",
+                "Direzione ${BusStopUserPrefrences.get_custom_label_school()}",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
@@ -67,7 +67,7 @@ class _SettingPageState extends State<SettingPage> {
                 controller: homeController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: "Custom label",
+                  labelText: "Etichetta personalizzata",
                   labelStyle: TextStyle(
                     color: Colors.grey.shade500,
                   ),
@@ -149,7 +149,7 @@ class _SettingPageState extends State<SettingPage> {
                 controller: schoolController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: "Custom label",
+                  labelText: "Etichetta personalizzata",
                   labelStyle: TextStyle(
                     color: Colors.grey.shade500,
                   ),
@@ -159,7 +159,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
               Padding(padding: EdgeInsets.all(5)),
-              DropdownSearch<Stop>(
+              /*DropdownSearch<Stop>(
                 items: Stops.all_stops,
                 selectedItem: school,
                 itemAsString: (Stop s) => s.gen_name().name,
@@ -212,12 +212,13 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     listViewProps: ListViewProps(),
                     searchDelay: Duration(milliseconds: 50)),
-                onChanged: (Stop? s) async {
+                /*onChanged: (Stop? s) async {
                   if (s != null) {
                     school = s;
                   }
-                },
-              ),
+                },*/
+                onChanged: null,
+              ),*/
               Padding(padding: EdgeInsets.all(5)),
               DropdownSearch<String>(
                 items: Stops.lines,
@@ -297,8 +298,8 @@ class _SettingPageState extends State<SettingPage> {
                         dialogBackgroundColor: Colors.blueGrey.shade800,
                         dialogType: DialogType.success,
                         animType: AnimType.scale,
-                        title: 'Success!',
-                        desc: 'Saved preferences succesfully!',
+                        title: 'Oplà!',
+                        desc: 'Ho salvato le tue modifiche 👴!',
                         btnOkOnPress: () {},
                       ).show();
                     } catch (e) {
@@ -309,8 +310,8 @@ class _SettingPageState extends State<SettingPage> {
                         dialogBackgroundColor: Colors.blueGrey.shade800,
                         dialogType: DialogType.error,
                         animType: AnimType.scale,
-                        title: 'Error',
-                        desc: 'Ann error occured while saving preferences!',
+                        title: 'Ops',
+                        desc: 'Qualcosa non ha funzionato!',
                         btnOkColor: Colors.red,
                         btnOkOnPress: () {},
                       ).show();

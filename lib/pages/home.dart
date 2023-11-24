@@ -32,8 +32,8 @@ class _HomeState extends State<Home> {
   Stop stop = Stops.all_stops.first;
   List<Arrivals> arrivals = List.empty(growable: true);
 
-  String label_home = "home";
-  String label_school = "school";
+  String label_home = "Casa 🏡";
+  String label_school = "Università 🏫";
   bool settings_opened = false;
   bool refresh_all_buses_on_navigate = false;
   Timer? timer;
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     timer = Timer.periodic(
-        Duration(seconds: 10), (Timer t) async => await Refresh());
+        Duration(seconds: 60), (Timer t) async => await Refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Refresh();
     });
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
     if (settings_opened) {
       return;
     }
-    print("start Refreshing");
+    print("Ricontrollo il tutto!\n");
     if (!is_refreshing) {
       print("Refresh");
       is_refreshing = true;
@@ -78,7 +78,7 @@ class _HomeState extends State<Home> {
         stops[0] = BusStopUserPrefrences.get_home();
 
         final busData = await get_bus(
-            'https://www.lpp.si/lpp/ajax/1/${stops[selected_route].value}',
+            'https://gpa.madbob.org/query.php?stop=${stops[selected_route].value}',
             line_preference);
 
         setState(() {
@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
         if (selected_route == 2) {
           type = "Select stop";
         } else {
-          type = selected_route == 0 ? "To $label_school" : "To $label_home";
+          type = selected_route == 0 ? "Direzione $label_school" : "Direzione $label_home";
         }
       });
 
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
           LoadingScreen.instance().show(context: context);
         }
         final _arrivals =
-            await get_arrivals('https://www.lpp.si/lpp/ajax/1/${stop.value}');
+            await get_arrivals('https://gpa.madbob.org/query.php?stop=${stop.value}');
         setState(() {
           _arrivals.sort((a, b) {
             // Check if both Arrivals have at least one BusArrival
@@ -194,13 +194,13 @@ class _HomeState extends State<Home> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: const Icon(Icons.school),
-                label: "To $label_school",
-                tooltip: "To $label_school",
+                label: "$label_school",
+                tooltip: "Direzione $label_school",
                 backgroundColor: Colors.blueGrey.shade800),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.home),
-                label: "To $label_home",
-                tooltip: "To $label_home",
+                label: "$label_home",
+                tooltip: "Direzione $label_home",
                 backgroundColor: Colors.blueGrey.shade800),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.bus_alert),
@@ -217,10 +217,10 @@ class _HomeState extends State<Home> {
                 if (!show_all_buses) ...[
                   const Padding(padding: EdgeInsets.all(42)),
                   Text(
-                    stop_name,
+                    "Fermata: " +stop_name + " - Linea: " + line_name,
                     style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
-                  Padding(
+                  /*Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       line_name,
@@ -231,6 +231,7 @@ class _HomeState extends State<Home> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
+                  */
                   Text(
                     line,
                     style: TextStyle(
@@ -256,7 +257,7 @@ class _HomeState extends State<Home> {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            "Tap to refresh",
+                            "Premi per aggiornare",
                             style: TextStyle(color: Colors.blueGrey.shade700),
                           ),
                         ),
