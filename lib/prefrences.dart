@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:moj_lpp/stops.dart';
+import 'package:BitTrans/stops.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BusStopUserPrefrences {

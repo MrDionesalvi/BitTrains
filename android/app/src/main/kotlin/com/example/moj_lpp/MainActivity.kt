@@ -1,4 +1,4 @@
-package com.example.moj_lpp
+package com.example.BitTrans
 
 import io.flutter.embedding.android.FlutterActivity
 

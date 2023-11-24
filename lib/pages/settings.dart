@@ -1,8 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:moj_lpp/prefrences.dart';
-import 'package:moj_lpp/stops.dart';
+import 'package:BitTrans/prefrences.dart';
+import 'package:BitTrans/stops.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -44,9 +44,12 @@ class _SettingPageState extends State<SettingPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.blueGrey.shade900,
       appBar: AppBar(
-        title: Text("Settings",
+        title: Text("Impostazioni",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
+        leading: BackButton(
+          color: Colors.white,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -138,7 +141,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
               Padding(padding: EdgeInsets.all(20)),
               Text(
-                "To ${BusStopUserPrefrences.get_custom_label_home()}",
+                "Direzione ${BusStopUserPrefrences.get_custom_label_home()}",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
@@ -324,7 +327,7 @@ class _SettingPageState extends State<SettingPage> {
                   child: SizedBox(
                     child: Center(
                       child: Text(
-                        "Apply",
+                        "Applica",
                         style: TextStyle(),
                       ),
                     ),

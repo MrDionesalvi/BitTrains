@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "moj_lpp" "\0"
+            VALUE "FileDescription", "BitTrans" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "moj_lpp" "\0"
+            VALUE "InternalName", "BitTrans" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "moj_lpp.exe" "\0"
-            VALUE "ProductName", "moj_lpp" "\0"
+            VALUE "OriginalFilename", "BitTrans.exe" "\0"
+            VALUE "ProductName", "BitTrans" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
