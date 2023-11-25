@@ -14,12 +14,12 @@ struct Provider: TimelineProvider {
     
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), title: "Placheholder", description: "Placheholder")
+        SimpleEntry(line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
     }
 
     func getSnapshot( in context: Context, completion: @escaping (SimpleEntry) -> ())  {
         let data = UserDefaults.init(suiteName: widgetGroupId)
-        let entry = SimpleEntry(date: .now, title: data?.string(forKey: "title") ?? "?", description: data?.string(forKey: "description") ?? "??")
+        let entry = SimpleEntry(line: data?.string(forKey: "line") ?? "69", stop: data?.string(forKey: "stop") ?? "1", time: data?.string(forKey: "time") ?? "Non arriva", stop: data?.string(forKey: "is_refreshing") ?? false)
         completion(entry)
     }
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
@@ -32,14 +32,19 @@ struct Provider: TimelineProvider {
 }
 
 struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let title: String
-    let description: String
-    
+    let line: String
+    let stop: String
+    let time: String
+    let is_refreshing: Bool
 }
 
 struct statusTrainEntryView : View {
     var entry: Provider.Entry
+    var color = Color.orange
+
+    if entry.is_refreshing {
+        color = Color.green
+    }
 
     var body: some View {
             VStack {
@@ -47,20 +52,20 @@ struct statusTrainEntryView : View {
                     Image(systemName: "circle.fill")
                         .resizable()
                         .frame(width: 10, height:10)
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(Color.green)
                     VStack (alignment: .leading){
-                        Text(entry.title)
+                        Text(entry.line)
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .allowsTightening(true)
-                        Text("MATIF")
+                        Text(entry.stop)
                             .font(.footnote)
                             .fontWeight(.bold)
                             .foregroundColor(Color.secondary)
                             .allowsTightening(true)
                     }
                     Spacer()
-                    Text("+1.75")
+                    Text("👨‍🔧")
                         .font(.footnote)
                         .fontWeight(.bold)
                         .foregroundColor(Color.green)
@@ -69,7 +74,7 @@ struct statusTrainEntryView : View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Text(entry.description)
+                    Text(entry.time)
                         .font(.title)
                         .fontWeight(.bold)
                 }
@@ -96,5 +101,5 @@ struct statusTrain: Widget {
 #Preview(as: .systemSmall) {
     statusTrain()
 } timeline: {
-    SimpleEntry(date: .now, title: "Ops", description: "Noooo")
+        SimpleEntry(line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
 }

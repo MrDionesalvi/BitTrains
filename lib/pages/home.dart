@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
@@ -65,11 +64,16 @@ class _HomeState extends State<Home> {
 
   bool is_refreshing = false;
 
-  updateWidgetFun(line, time, is_refreshing) {
-    Random random = new Random();
-    print("animals " + appGroudId + " is refreshing");
-    HomeWidget.saveWidgetData<String>('title', "Linea: " + line);
-    HomeWidget.saveWidgetData<String>('description', time);
+  updateWidgetFun(line, stop, time, is_refreshing) {
+    print("Aggiornamento del widget");
+    HomeWidget.saveWidgetData<String>('line', "Linea: " + line);
+    HomeWidget.saveWidgetData<String>('stop',  stop);
+    HomeWidget.saveWidgetData<String>('time', time);
+    if(is_refreshing == "🟢") {
+      HomeWidget.saveWidgetData<String>('is_refreshing', "true");
+    } else {
+      HomeWidget.saveWidgetData<String>('is_refreshing', "false");
+    }
     HomeWidget.updateWidget(iOSName: "statusTrain");
   }
 
@@ -83,11 +87,6 @@ class _HomeState extends State<Home> {
       print("Refresh");
       is_refreshing = true;
       if (selected_route <= 1) {
-        // showDialog(
-        //     context: context,
-        //     builder: (context) {
-        //       return Center(child: CircularProgressIndicator());
-        //     });
         LoadingScreen.instance().show(context: context);
         line_preference = BusStopUserPrefrences.get_line();
         stops[1] = BusStopUserPrefrences.get_school();
@@ -108,7 +107,7 @@ class _HomeState extends State<Home> {
           label_home = BusStopUserPrefrences.get_custom_label_home();
           label_school = BusStopUserPrefrences.get_custom_label_school();
         });
-        updateWidgetFun(line_name + " - " + stop_value, minutes, line);
+        updateWidgetFun(line_name, stop_value, minutes, line);
         // Navigator.of(context).pop();
         LoadingScreen.instance().hide();
       }
@@ -124,11 +123,6 @@ class _HomeState extends State<Home> {
       });
 
       if (selected_route == 2) {
-        // showDialog(
-        //     context: context,
-        //     builder: (context) {
-        //       return Center(child: CircularProgressIndicator());
-        //     });
         if (refresh_all_buses_on_navigate) {
           LoadingScreen.instance().show(context: context);
         }

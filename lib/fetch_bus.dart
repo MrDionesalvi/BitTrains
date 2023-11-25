@@ -27,18 +27,35 @@ Future<Map<String, dynamic>> get_bus(String url, String line) async {
       for (var item in jsonData) {
         //print(item['line']); 
         if (line == item['line'].toString()) {
-          //print("Minutes: " + item["hour"].toString());
+          DateTime currDt = DateTime.now();
+          DateTime busDt = DateTime(1970,01,01, currDt.hour, currDt.minute, currDt.second);
+          DateTime timeBus = DateFormat("hh:mm:ss").parse(item['hour']);
+          var minutesR = timeBus.difference(busDt).inMinutes;
           String realtime = "🟡";
           if (item['realtime'].toString() == "true") {
             realtime = "🟢";
           }
-          resultList = {
-            'line_name': item['line'],
-            'time': item['hour'],
-            'minutes': "In arrivo ${item['hour']}",
-            'line': realtime
-          };
-          break;
+          if(minutesR > 0) {
+            resultList = {
+              'line_name': item['line'],
+              'time': item['hour'],
+              'minutes': "Tra $minutesR min.",
+              'line': realtime
+            };
+            break;
+          }
+          else if (minutesR == 0) {
+            resultList = {
+              'line_name': item['line'],
+              'time': item['hour'],
+              'minutes': "Ora",
+              'line': realtime
+            };
+            break;
+          }
+          else {
+            continue;
+          } 
         }
       }
       if (resultList != null) {
