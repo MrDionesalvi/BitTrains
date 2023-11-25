@@ -42,11 +42,40 @@ struct statusTrainEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text(entry.title)
-            Text(entry.description)
+            VStack {
+                HStack(alignment: .firstTextBaseline) {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(width: 10, height:10)
+                        .foregroundColor(Color.orange)
+                    VStack (alignment: .leading){
+                        Text(entry.title)
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .allowsTightening(true)
+                        Text("MATIF")
+                            .font(.footnote)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.secondary)
+                            .allowsTightening(true)
+                    }
+                    Spacer()
+                    Text("+1.75")
+                        .font(.footnote)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.green)
+                        .allowsTightening(true)
+                }
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(entry.description)
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+            }
+            .padding(.all, 10)
         }
-    }
 }
 
 struct statusTrain: Widget {
