@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
+import 'package:home_widget/home_widget.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:BitTrans/dialog/loading_screen.dart';
 import "package:flutter/services.dart";
@@ -19,6 +21,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String appGroudId = "group.statusTrain";
+  String iOSWidgetName = "flutterTrain";
+
   String line = "";
   String line_name = "";
   String time = "";
@@ -41,6 +47,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    HomeWidget.setAppGroupId("group.flutterTrain");
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     timer = Timer.periodic(
@@ -57,6 +64,14 @@ class _HomeState extends State<Home> {
   }
 
   bool is_refreshing = false;
+
+  updateWidgetFun(line, time, is_refreshing) {
+    Random random = new Random();
+    print("animals " + appGroudId + " is refreshing");
+    HomeWidget.saveWidgetData<String>('title', "Linea: " + line);
+    HomeWidget.saveWidgetData<String>('description', time);
+    HomeWidget.updateWidget(iOSName: "statusTrain");
+  }
 
   Future<void> Refresh() async {
     print(is_refreshing);
@@ -93,6 +108,7 @@ class _HomeState extends State<Home> {
           label_home = BusStopUserPrefrences.get_custom_label_home();
           label_school = BusStopUserPrefrences.get_custom_label_school();
         });
+        updateWidgetFun(line_name + " - " + stop_value, minutes, line);
         // Navigator.of(context).pop();
         LoadingScreen.instance().hide();
       }
@@ -207,8 +223,8 @@ class _HomeState extends State<Home> {
                 backgroundColor: Colors.blueGrey.shade800),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.bus_alert),
-                label: "Arriva alle ore",
-                tooltip: "Arriva alle ore",
+                label: "Fermate",
+                tooltip: "Fermate",
                 backgroundColor: Colors.blueGrey.shade800),
           ],
         ),
