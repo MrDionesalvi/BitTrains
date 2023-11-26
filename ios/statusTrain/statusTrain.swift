@@ -14,12 +14,12 @@ struct Provider: TimelineProvider {
     
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
+        SimpleEntry(date: .now, line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
     }
 
     func getSnapshot( in context: Context, completion: @escaping (SimpleEntry) -> ())  {
         let data = UserDefaults.init(suiteName: widgetGroupId)
-        let entry = SimpleEntry(line: data?.string(forKey: "line") ?? "69", stop: data?.string(forKey: "stop") ?? "1", time: data?.string(forKey: "time") ?? "Non arriva", stop: data?.string(forKey: "is_refreshing") ?? false)
+        let entry = SimpleEntry(date: .now, line: data?.string(forKey: "line") ?? "69", stop: data?.string(forKey: "stop") ?? "1", time: data?.string(forKey: "time") ?? "Non arriva", is_refreshing: data?.bool(forKey: "is_refreshing") ?? false)
         completion(entry)
     }
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
@@ -32,6 +32,8 @@ struct Provider: TimelineProvider {
 }
 
 struct SimpleEntry: TimelineEntry {
+    var date: Date
+    
     let line: String
     let stop: String
     let time: String
@@ -40,19 +42,23 @@ struct SimpleEntry: TimelineEntry {
 
 struct statusTrainEntryView : View {
     var entry: Provider.Entry
-    var color = Color.orange
-
-    if entry.is_refreshing {
-        color = Color.green
-    }
 
     var body: some View {
             VStack {
                 HStack(alignment: .firstTextBaseline) {
-                    Image(systemName: "circle.fill")
-                        .resizable()
-                        .frame(width: 10, height:10)
-                        .foregroundColor(Color.green)
+                    if (entry.is_refreshing) {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .frame(width: 10, height:10)
+                            .foregroundColor(Color.green)
+                    }
+                    else {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .frame(width: 10, height:10)
+                            .foregroundColor(Color.orange)
+                    }
+                    
                     VStack (alignment: .leading){
                         Text(entry.line)
                             .font(.subheadline)
@@ -75,7 +81,7 @@ struct statusTrainEntryView : View {
                 HStack {
                     Spacer()
                     Text(entry.time)
-                        .font(.title)
+                        .font(.title2)
                         .fontWeight(.bold)
                 }
             }
@@ -101,5 +107,5 @@ struct statusTrain: Widget {
 #Preview(as: .systemSmall) {
     statusTrain()
 } timeline: {
-        SimpleEntry(line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
+    SimpleEntry(date: .now, line: "1", stop: "1", time: "Tra 1 min", is_refreshing: true)
 }
