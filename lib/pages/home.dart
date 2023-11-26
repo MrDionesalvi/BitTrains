@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
@@ -46,7 +47,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    HomeWidget.setAppGroupId("group.flutterTrain");
+    if (Platform.isIOS){
+      HomeWidget.setAppGroupId("group.flutterTrain");
+    }
     timer = Timer.periodic(Duration(seconds: 60), (Timer t) async => await Refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Refresh();
@@ -61,17 +64,31 @@ class _HomeState extends State<Home> {
 
   bool is_refreshing = false;
 
+  /// The function updates the widget data and triggers an update for iOS devices.
+  /// 
+  /// Args:
+  ///   line: The line parameter represents the line of a train or transportation service. It could be a
+  /// string value indicating the line number or name.
+  ///   stop: The "stop" parameter represents the name or identifier of a train stop or station. It is
+  /// used to display the name of the stop in the widget.
+  ///   time: The "time" parameter represents the time information that needs to be updated in the
+  /// widget.
+  ///   is_refreshing: The parameter "is_refreshing" is a boolean value indicating whether the widget is
+  /// currently refreshing or not. It is represented by a string with the value "🟢" if it is
+  /// refreshing, and any other value if it is not refreshing.
   updateWidgetFun(line, stop, time, is_refreshing) {
-    print("Aggiornamento del widget");
-    HomeWidget.saveWidgetData<String>('line', "Linea: " + line);
-    HomeWidget.saveWidgetData<String>('stop',  stop);
-    HomeWidget.saveWidgetData<String>('time', time);
-    if(is_refreshing == "🟢") {
-      HomeWidget.saveWidgetData<String>('is_refreshing', "true");
-    } else {
-      HomeWidget.saveWidgetData<String>('is_refreshing', "false");
+    if (Platform.isIOS){
+      print("Aggiornamento del widget");
+      HomeWidget.saveWidgetData<String>('line', "Linea: " + line);
+      HomeWidget.saveWidgetData<String>('stop',  stop);
+      HomeWidget.saveWidgetData<String>('time', time);
+      if(is_refreshing == "🟢") {
+        HomeWidget.saveWidgetData<String>('is_refreshing', "true");
+      } else {
+        HomeWidget.saveWidgetData<String>('is_refreshing', "false");
+      }
+      HomeWidget.updateWidget(iOSName: "statusTrain");
     }
-    HomeWidget.updateWidget(iOSName: "statusTrain");
   }
 
   Future<void> Refresh() async {
