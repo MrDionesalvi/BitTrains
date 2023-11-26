@@ -45,7 +45,6 @@ dependencies:
   intl: ^0.18.1
   home_widget: ^0.3.0
   introduction_screen: ^3.1.12
-  background_fetch: ^1.2.1
 
 
 dev_dependencies:
