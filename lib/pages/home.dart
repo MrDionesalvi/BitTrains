@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:home_widget/home_widget.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -47,8 +48,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isIOS){
+    if (!kIsWeb && Platform.isIOS){
       HomeWidget.setAppGroupId("group.flutterTrain");
+    }
+    else{
+      print("No IOS");
     }
     timer = Timer.periodic(Duration(seconds: 60), (Timer t) async => await Refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -77,7 +81,7 @@ class _HomeState extends State<Home> {
   /// currently refreshing or not. It is represented by a string with the value "🟢" if it is
   /// refreshing, and any other value if it is not refreshing.
   updateWidgetFun(line, stop, time, is_refreshing) {
-    if (Platform.isIOS){
+    if (!kIsWeb && Platform.isIOS){
       print("Aggiornamento del widget");
       HomeWidget.saveWidgetData<String>('line', "Linea: " + line);
       HomeWidget.saveWidgetData<String>('stop',  stop);
@@ -203,7 +207,7 @@ class _HomeState extends State<Home> {
           unselectedIconTheme: IconThemeData(color: Colors.blueGrey.shade700),
           backgroundColor: Colors.blueGrey.shade900,
           onTap: (value) {
-            print(value);
+            //print(value);
             setState(() {
               refresh_all_buses_on_navigate = value == 2 && selected_route != 2;
               selected_route = value;

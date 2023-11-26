@@ -73,7 +73,7 @@ Future<Map<String, dynamic>> get_bus(String url, String line) async {
       "line": " ",
     };
   } catch (error) {
-    print(error);
+    //print(error);
     return {
       'line_name': " ",
       'time': "Errore",
@@ -176,7 +176,7 @@ Future<List<Arrivals>> get_arrivals(String url) async {
     }
     return arrivals_list;
   } catch (e) {
-    print(e);
+    //print(e);
     return arrivals_list;
   }
 }
