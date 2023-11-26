@@ -76,8 +76,8 @@ Future<Map<String, dynamic>> get_bus(String url, String line) async {
     print(error);
     return {
       'line_name': " ",
-      'time': "Error",
-      'minutes': "An error occured!",
+      'time': "Errore",
+      'minutes': "Nessun tram trovato!",
       'key': " ",
       "line": " ",
     };

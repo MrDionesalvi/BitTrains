@@ -47,10 +47,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     HomeWidget.setAppGroupId("group.flutterTrain");
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-    timer = Timer.periodic(
-        Duration(seconds: 60), (Timer t) async => await Refresh());
+    timer = Timer.periodic(Duration(seconds: 60), (Timer t) async => await Refresh());
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Refresh();
     });
